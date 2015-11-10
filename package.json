@@ -1,0 +1,22 @@
+{
+  "name": "PLTB The Pi Lego Train Basement ",
+  "version": "0.0.1",
+  "description": "Keller und Elektrik und alles für die Lego Züge",
+  "main": "startpltb.js
+  ",
+  "scripts": {
+    "test": ""
+  },
+  "keywords": [
+    "lego PF Train"
+  ],
+  "author": "David Wagner",
+  "license": "ISC",
+  "dependencies": {
+    "exec": "^0.2.1",
+    "http": "0.0.0",
+    "johnny-five": "^0.9.7",
+    "raspi-io": "^5.0.0",
+    "socket.io": "^1.3.7"
+  }
+}

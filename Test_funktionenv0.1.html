@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>ASU19Trains</title>
+        
+        
+        
+        
+        <style>
+            body{
+              padding: 0;
+              margin: 0px 50px;
+              font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+              font-weight: 300;
+              text-rendering: optimizelegibility;
+            }
+            p{font-size: 30px; line-height: 30px}
+            div.demo{text-align: center; width: 280px; float: left}
+            div.demo > p{font-size: 20px}
+        </style>
+        
+         <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/ion.rangeSlider.css" />
+    <link rel="stylesheet" href="css/ion.rangeSlider.skinFlat.css" />
+        
+    </head>
+    <body>
+        <h1>V 0.1</h1>
+        <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+ <!--[if IE]><script type="text/javascript" src="js/excanvas.js"></script><![endif]-->
+        <script src="js/jquery.knob.min.js"></script>
+    
+      <script src="/socket.io/socket.io.js"></script>
+    
+        
+
+ <script>
+            $(function($) {
+
+                $(".knob").knob({
+                    change : function (value) {
+                      
+                    },
+                    release : function (value) {
+                          var richtung ="";
+                          if (value < null){var richtung = "M";
+                          value = value * -1;
+                          }
+                        
+                        socket.emit('fahren1', value, richtung);
+                        
+                    },
+                    cancel : function () {
+                        var richtung ="";
+                        socket.emit('fahren1', 'BRAKE', richtung);
+                        
+                    },
+                    /*format : function (value) {
+                        return value + '%';
+                    },*/
+                    draw : function () {
+
+                        // "tron" case
+                        if(this.$.data('skin') == 'tron') {
+
+                            this.cursorExt = 0.3;
+
+                            var a = this.arc(this.cv)  // Arc
+                                , pa                   // Previous arc
+                                , r = 1;
+
+                            this.g.lineWidth = this.lineWidth;
+
+                            if (this.o.displayPrevious) {
+                                pa = this.arc(this.v);
+                                this.g.beginPath();
+                                this.g.strokeStyle = this.pColor;
+                                this.g.arc(this.xy, this.xy, this.radius - this.lineWidth, pa.s, pa.e, pa.d);
+                                this.g.stroke();
+                            }
+
+                            this.g.beginPath();
+                            this.g.strokeStyle = r ? this.o.fgColor : this.fgColor ;
+                            this.g.arc(this.xy, this.xy, this.radius - this.lineWidth, a.s, a.e, a.d);
+                            this.g.stroke();
+
+                            this.g.lineWidth = 2;
+                            this.g.beginPath();
+                            this.g.strokeStyle = this.o.fgColor;
+                            this.g.arc( this.xy, this.xy, this.radius - this.lineWidth + 1 + this.lineWidth * 2 / 3, 0, 2 * Math.PI, false);
+                            this.g.stroke();
+
+                            return false;
+                        }
+                    }
+                });
+
+               
+            });
+        </script>
+ <div class="Trafo">            
+            <pre>Kanal 1</pre>
+            <input class="knob" data-angleOffset=-125 data-angleArc=250 data-min=-7 data-max=7 data-fgColor="#66EE66" data-rotation="clockwise" value="0">
+<input type="button" value="stop" id="stop" />
+
+        </div>
+
+
+
+
+
+
+
+
+<script>
+var socket = io.connect('http://192.168.1.149:8080');
+$('#poke').on('click', function() {
+  socket.emit('message', 'Hi server, how are you?');
+  });
+    
+    
+    
+    $('#fahr').on('click', function() {
+  socket.emit('fahren');
+});
+
+    $('#stop').on('click', function() {
+//  socket.emit('stoppen');
+
+    $('.knob')
+        .val(0)
+        .trigger('change');
+});
+    </script>
+        
+        
+        
+        
+    
+    </body>
+</html>
