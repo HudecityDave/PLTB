@@ -12,20 +12,49 @@ io = require('socket.io')(http);
 app.use("/css", express.static(__dirname + '/css'));
 app.use("/js", express.static(__dirname + '/js'));
 app.use("/img", express.static(__dirname + '/img'));
+app.use("/index.html", express.static(__dirname + '/index.html'));
+app.use("/switches.html", express.static(__dirname + '/switches.html'));
 // index.html auf /
 app.get('/', function(req, res) {
 res.sendFile(__dirname + '/index.html');
+res.sendFile(__dirname + '/switches.html');
 });
 
 // Raspberry Module laden
-	var five = require('johnny-five');
+	var five = require('johnny-five'),servo;
 	var raspi = require("raspi-io");
+	
+	//var five = require("johnny-five");
+   var arduboard = new five.Board();
+	// Arduino initialisieren
+
 	var board = new five.Board({
   		io: new raspi()
 	});
 // Lego IR lirc
 	var sys = require('sys');
 	var exec = require('child_process').exec;
+
+
+// Weiche 1 an Port 7 Arduino definieren
+arduboard.on("ready", function() {
+// Weiche 1 an Port 7 Arduino definieren
+  servo7 = new five.Servo({
+    pin:7,
+    range: [0,45],
+    type: "standard",
+    center:false
+  });
+
+//    var switchServo = new five.Servo(7); // Crossing Arm
+	// Add devices to REPL (optional)
+    this.repl.inject({
+        servo7: servo7,
+    });
+     servo7.to(0); // Adjust this servo angle as needed
+});
+//*********************************************
+
 
 // Linux Infrarot Transmitter sendet Kommando
 // Code concept and prerequisites found here: https://github.com/dspinellis/lego-power-scratch
@@ -45,15 +74,24 @@ io.sockets.on('connection', function (socket) {
         console.log('A client is speaking to me! They\'re saying: ' + message);
     }); 
     
-   // Zug Befehl Kanal 1 Fahren
+   // Zug Befehl Kanal  Fahren
         socket.on('fahren1', function(kanal, farbe, speed, richtung){
 console.log("Moving" +kanal +farbe +richtung +speed);
 				pfir(kanal + farbe +'_'+ richtung + speed);
     });
 // Zug Befehl ende    
+// Servo 1 Pin 7 bewegen
+socket.on('servo7call', function (winkel) {
+    console.log(winkel);
+    if(board.isReady){ servo7.to(winkel.pos);  }
+  });
+// Servo 1 Pin 7 ende
+
+
 });
 
 http.listen(8080);
+
 
 
 

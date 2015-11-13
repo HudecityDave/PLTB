@@ -39,7 +39,8 @@
         </div> 
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="index.html"><i class="icon-home icon-white"></i>Home</a></li>
+            <!--  <li class="active"><a href="index.html"><i class="icon-home icon-white"></i>Zugsteuerung</a></li>-->
+                       
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -195,6 +196,89 @@
 		  		</div>
         </div>
       </div><!-- /row -->
+      
+      
+      
+  <!-- ============= -->
+      <div class="row">
+        <div class="col-sm-3 col-lg-3">
+      		<div class="dash-unit">
+      	<dtitle>Weiche 1 (pin7)</dtitle>
+	      		<hr>	
+      	<div class="info-user">
+	     <div class="btn-group" data-toggle="buttons">
+            <label class="servobtn btn btn-success active">
+              <input type="radio" name="servo" id="servo1" value="0"> gerade
+            </label>
+            <label class="servobtn btn btn-warning">
+              <input type="radio" name="servo" id="servo2" value="100"> gestellt
+            </label>
+        </div>
+<script>
+$('.servobtn').button();
+      $('.servobtn').on('change',function(){
+          console.log("Setting Servo Pos:",$('input[name=servo]:checked').val())
+          socket.emit('servo7call',{pos:$('input[name=servo]:checked').val()});
+      });
+</script>
+	</div>        
+      		</div>
+        </div>
+
+
+
+
+        <div class="col-sm-3 col-lg-3">
+      		<div class="dash-unit">
+      		<dtitle>Weiche 2</dtitle>
+	      		<hr>	
+      	<div class="info-user">
+		  		</div>        
+			</div>
+        </div>
+        <div class="col-sm-3 col-lg-3">
+      		<div class="dash-unit">
+      		<dtitle>Weiche 3</dtitle>
+	      		<hr>	
+      	<div class="info-user">
+  
+	</div>        
+		  		</div>
+        </div>
+        
+        <div class="col-sm-3 col-lg-3">
+<div class="dash-unit">
+
+<dtitle>Weiche 4</dtitle>
+	      		<hr>	
+      	<div class="info-user">
+
+	</div>        
+
+
+		  		</div>
+        </div>
+      </div><!-- /row -->    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
 	</div> <!-- /container -->
 <!-- Weitere funktionen Züge - Nachgelagert am Ende -->
 <script src="js/zugstoppen.js"></script>

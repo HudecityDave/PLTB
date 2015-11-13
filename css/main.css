@@ -22,7 +22,7 @@
 - #bdbdbd & #fff (Font colors)
 */
 
-
+/* Switches für die Zugsteuerung */
 
     .onoffswitch {
         position: relative; width: 54px;
@@ -58,6 +58,8 @@
         background-color: #1CBF2A; color: #fff;
         text-align: right;
     }
+    
+     
     .onoffswitch-switch {
  background: #ffffff none repeat scroll 0 0;
     border: 0 solid #999999;
@@ -77,20 +79,6 @@
     .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
         right: 0px; 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

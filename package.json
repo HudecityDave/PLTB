@@ -1,9 +1,8 @@
 {
-  "name": "PLTB The Pi Lego Train Basement ",
+  "name": "PLTB_The_Pi_Lego_Train_Basement",
   "version": "0.0.1",
   "description": "Keller und Elektrik und alles für die Lego Züge",
-  "main": "startpltb.js
-  ",
+  "main": "start_pltb.js",
   "scripts": {
     "test": ""
   },
