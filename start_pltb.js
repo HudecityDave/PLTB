@@ -13,12 +13,48 @@ app.use("/css", express.static(__dirname + '/css'));
 app.use("/js", express.static(__dirname + '/js'));
 app.use("/img", express.static(__dirname + '/img'));
 app.use("/index.html", express.static(__dirname + '/index.html'));
-app.use("/switches.html", express.static(__dirname + '/switches.html'));
+
 // index.html auf /
 app.get('/', function(req, res) {
 res.sendFile(__dirname + '/index.html');
-res.sendFile(__dirname + '/switches.html');
+
 });
+
+// ******************** Temperatur & Feuchtigkeit *******************
+var sensorLib = require('node-dht-sensor');
+
+var sensor = {
+    initialize: function () {
+    //GPIO Pin 4
+        return sensorLib.initialize(22, 4);
+    },
+    read: function () {
+        var readout = sensorLib.read();
+        console.log('Temperature: ' + readout.temperature.toFixed(2) + 'C, ' +
+            'humidity: ' + readout.humidity.toFixed(2) + '%');
+        setTimeout(function () {
+            sensor.read();
+        }, 2000);
+    }
+};
+
+if (sensor.initialize()) {
+    sensor.read();
+} else {
+    console.warn('Failed to initialize sensor');
+}
+
+//************************************************************************
+
+
+
+
+
+
+
+
+
+
 
 // Raspberry Module laden
 	var five = require('johnny-five'),servo;
@@ -90,7 +126,7 @@ socket.on('servo7call', function (winkel) {
 
 });
 
-http.listen(8080);
+http.listen(80);
 
 
 

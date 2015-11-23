@@ -1,4 +1,4 @@
-var socket = io.connect('http://192.168.1.149:8080');
+var socket = io.connect('http://192.168.1.149:80');
 $('#poke').on('click', function() {
   socket.emit('message', 'Hi server, how are you?');
   });
